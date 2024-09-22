@@ -1,0 +1,12 @@
+{
+    "SwitchLanguage":{
+        "tr":"Türkçe",
+        "en":"English"
+    },
+    "toolbar": {
+        "addTask": "Add Task",
+        "removeTask": "Delete Task",
+        "updateTask": "Update Task",
+        "listTask":"Task List"
+    }
+}
