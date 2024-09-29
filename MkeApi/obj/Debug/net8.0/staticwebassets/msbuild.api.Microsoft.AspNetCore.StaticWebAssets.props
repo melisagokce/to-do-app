@@ -1,0 +1,36 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\task-files\c6c695db-6bc2-40b9-8420-7dd23760a394\b515f2ef-1307-4759-b802-0d7ca1b56f14_7e312dcf-1d4e-4b97-9114-5cbaf0bd96a8.JPG))">
+      <SourceType>Package</SourceType>
+      <SourceId>api</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/api</BasePath>
+      <RelativePath>task-files/c6c695db-6bc2-40b9-8420-7dd23760a394/b515f2ef-1307-4759-b802-0d7ca1b56f14_7e312dcf-1d4e-4b97-9114-5cbaf0bd96a8.JPG</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\task-files\c6c695db-6bc2-40b9-8420-7dd23760a394\b515f2ef-1307-4759-b802-0d7ca1b56f14_7e312dcf-1d4e-4b97-9114-5cbaf0bd96a8.JPG))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\task-files\c6c695db-6bc2-40b9-8420-7dd23760a394\cfe5b2d4-c622-48c5-bd9c-2ac965d8bc0d_de.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>api</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/api</BasePath>
+      <RelativePath>task-files/c6c695db-6bc2-40b9-8420-7dd23760a394/cfe5b2d4-c622-48c5-bd9c-2ac965d8bc0d_de.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\task-files\c6c695db-6bc2-40b9-8420-7dd23760a394\cfe5b2d4-c622-48c5-bd9c-2ac965d8bc0d_de.png))</OriginalItemSpec>
+    </StaticWebAsset>
+  </ItemGroup>
+</Project>
