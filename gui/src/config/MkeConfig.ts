@@ -12,7 +12,7 @@ declare global {
 const mkeConfig = {
     api: {
         protocol: "http",
-        url: "127.0.0.1:5220",
+        url: "127.0.0.1:5220/api",
     }
 };
 

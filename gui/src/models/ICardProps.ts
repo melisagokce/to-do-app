@@ -1,6 +1,9 @@
 export default interface ICardProps {
-    id: string;
+    taskId: string;
     title: string;
     description: string;
+    images: any,
     checkStatus: boolean;
+    createdAt: string;
+    updatedAt: string;
 }
