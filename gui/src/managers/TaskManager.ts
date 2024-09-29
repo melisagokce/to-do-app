@@ -12,7 +12,7 @@ class TaskManager{
 
     static async deleteTask(taskId: string){
         const config: IRequestProps = {
-            url: `${window.MkeConfig.api.protocol}://${window.MkeConfig.api.url}/task/${taskId}`,
+            url: `${window.MkeConfig.api.protocol}://${window.MkeConfig.api.url}/task-sil/${taskId}`,
             method: "DELETE",
             data: {}
         }
@@ -23,7 +23,7 @@ class TaskManager{
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static async getAllTask(): Promise<any>{
         const config: IRequestProps = {
-            url: `${window.MkeConfig.api.protocol}://${window.MkeConfig.api.url}/task`,
+            url: `${window.MkeConfig.api.protocol}://${window.MkeConfig.api.url}/task-list`,
             method: "GET",
             data: {}
         }

@@ -1,61 +1,82 @@
-import { MenuProps, Space } from 'antd'
-import React from 'react'
-import { makeStyles } from '@mui/styles'
-import { Layout, Menu } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { AppstoreAddOutlined, EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
-import SwitchLanguage from '../language/SwitchLanguage';
+import React from "react";
+import { Menu, MenuProps, Layout } from "antd";
+import {
+  AppstoreAddOutlined,
+  EditOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
+import { Header } from "antd/es/layout/layout";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import AppSettings from "./items/settings/AppSettings";
+import { makeStyles } from "@mui/styles";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
-const { Header } = Layout;
-
-const useStyles = makeStyles({
-  root: {
-    height: "100px",
-    width: "100%",
-    background: "silver"
+const customStyles = makeStyles({
+  language: {
+    maxWidth: "200px",
+    padding: "0",
+    height: "100%",
   },
-  header: {
-    display: 'flex', alignItems: 'center'
-  }
 });
 
 const Toolbar = () => {
-  const styles = useStyles();
-  const navigate = useNavigate();
   const { t } = useTranslation();
-  const menu = [
-    { text: t("toolbar.listTask", { defaultValue: "Task Listele" }), route: "liste", icon: <UnorderedListOutlined />, style: { fontWeight: "bold" } },
-    { text: t("toolbar.updateTask", { defaultValue: "Task Güncelle" }), route: "task-guncelle", icon: <EditOutlined />, style: { fontWeight: "bold" } },
-    { text: t("toolbar.addTask", { defaultValue: "Task Oluştur" }), route: "task-ekle", icon: <AppstoreAddOutlined />, style: { fontWeight: "bold" } }
-  ]
+  const navigate = useNavigate();
+  const styles = customStyles();
+  const darkMode = useSelector(
+    (state: RootState) => state.appSettingsReducer.darkMode
+  );
 
-  const items1: MenuProps['items'] = menu.map((item, index) => ({
+  const menu = [
+    {
+      text: t("toolbar.listTask", { defaultValue: "Task Listele" }),
+      route: "/liste",
+      icon: <UnorderedListOutlined />,
+      style: { fontWeight: "bold" },
+    },
+    {
+      text: t("toolbar.updateTask", { defaultValue: "Task Güncelle" }),
+      route: "/task-guncelle",
+      icon: <EditOutlined />,
+      style: { fontWeight: "bold" },
+    },
+    {
+      text: t("toolbar.addTask", { defaultValue: "Task Oluştur" }),
+      route: "/task-ekle",
+      icon: <AppstoreAddOutlined />,
+      style: { fontWeight: "bold" },
+    },
+  ];
+
+  const items1: MenuProps["items"] = menu.map((item, index) => ({
     key: index.toString(),
     label: `${item.text}`,
     icon: item.icon,
     style: item.style,
-    onClick: () => navigate(item.route)
+    onClick: () => navigate(item.route),
   }));
 
   return (
-    <>
-      <Header className={styles.header}>
-        <Space>
-          <Menu
-            theme="light"
-            mode="horizontal"
-            defaultSelectedKeys={['0']}
-            items={items1}
-            style={{ flex: 1, minWidth: 0 }}
-          />
-        </Space>
-        <Space>
-          <SwitchLanguage/>
-        </Space>
-      </Header>
-    </>
-  )
-}
+    <Header style={{ display: "flex", alignItems: "center", padding: "0" }}>
+      {/* <div className="demo-logo" /> */}
+      <Menu
+        mode="horizontal"
+        defaultSelectedKeys={["2"]}
+        items={items1}
+        style={{ flex: 1, minWidth: 0 }}
+      />
+      <Layout
+        className={styles.language}
+        style={{
+          borderBottom: `1px solid ${darkMode ? "#313131" : "#F0F0F0"}`,
+        }}
+      >
+        <AppSettings />
+      </Layout>
+    </Header>
+  );
+};
 
-export default Toolbar
+export default Toolbar;
