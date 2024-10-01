@@ -1,12 +1,59 @@
 {
-    "SwitchLanguage":{
-        "tr":"Türkçe",
-        "en":"English"
+    "SwitchLanguage": {
+        "tr": "Türkçe",
+        "en": "English",
+        "ru": "Rusça"
     },
     "toolbar": {
         "addTask": "Add Task",
-        "removeTask": "Delete Task",
+        "removeTask": "Remove Task",
         "updateTask": "Update Task",
-        "listTask":"Task List"
+        "listTask": "List Tasks"
+    },
+    "components": {
+        "updateCard": {
+            "button": "Save Changes",
+            "titlePlaceholder": "Task title...",
+            "descPlaceholder": "Add description..."
+        },
+        "updateCardList": {
+            "header": "Task List"
+        },
+        "addCard": {
+            "button": "Create Task",
+            "titlePlaceholder": "Task title...",
+            "descPlaceholder": "Add description..."
+        },
+        "completedFace": {
+            "text": "Completed!"
+        },
+        "notFoundPage": {
+            "text": "Sorry, the page you visited does not exist.",
+            "button": "Go Back"
+        }
+    },
+    "messages": {
+        "addTask": {
+            "success": "New Task Created Successfully.",
+            "error": "Failed to Create New Task."
+        },
+        "updateTask": {
+            "success": "Task Updated Successfully.",
+            "error": "Failed to Update Task."
+        },
+        "removeTask": {
+            "success": "Task Removed Successfully.",
+            "error": "Failed to Remove Task."
+        },
+        "updateCheckStatus": {
+            "success": "Task Status Updated Successfully.",
+            "error": "Failed to Update Task Status."
+        },
+        "updateEmpty": {
+            "error": "Task title and/or description cannot be empty."
+        },
+        "addEmpty": {
+            "error": "Task title and/or description cannot be empty."
+        }
     }
 }

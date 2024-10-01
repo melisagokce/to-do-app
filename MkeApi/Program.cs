@@ -24,6 +24,9 @@ app.UseStaticFiles();
 
 app.UseCors("AllowOrigin");
 
+app.UseRouting();
+// app.UseAuthorization();
+
 app.MapControllers();
 
 if (app.Environment.IsDevelopment())

@@ -61,6 +61,17 @@ const taskReducer: Reducer<ITaskProps, IActionProps<ICardProps | any>> = (
       };
     }
 
+    case "TASK_REDUCER/UPDATE_TASK_STATUS": {
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.taskId === action.payload.taskId) {
+            return { ...task, checkStatus: action.payload.checkStatus };
+          }
+          return task;
+        }),
+      };
+    }
     default:
       return state;
   }

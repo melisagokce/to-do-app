@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles/global.css";
 import { ConfigProvider } from "antd";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
@@ -9,6 +9,9 @@ import UpdateTaskPage from "./pages/UpdateTaskPage";
 import { Layout, theme } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
+import AppSettingActions from "./store/actions/AppSettingActions";
+import LocalStorageManager from "./managers/LocalStorageManager";
+import NotFoundPage from './pages/NotFoundPage';
 
 const { Footer, Content } = Layout;
 
@@ -32,12 +35,26 @@ const App: React.FC = () => {
     (state: RootState) => state.appSettingsReducer.darkMode
   );
 
+  useEffect(() => {
+    const localStorageDarkMode = LocalStorageManager.getDarkMode();
+    const localStorageLanguage = LocalStorageManager.getLanguage();
+    if (localStorageLanguage) {
+      AppSettingActions.changeLanguage(localStorageLanguage);
+    }
+    AppSettingActions.changeMode(localStorageDarkMode);
+  }, []);
+
   return (
     <ConfigProvider
       theme={{
         token: {
-          colorBgLayout: darkMode ? "#141414" : "#fff", // Layout arka plan rengi
-          colorText: darkMode ? "#fff" : "#141414", // Yazı rengi
+          colorBgContainer: darkMode ? "#1F1F1F" : "#fff",
+          colorBgMask: darkMode ? "#1F1F1F" : "#fff",
+          colorBgBase: darkMode ? "#1F1F1F" : "#fff",
+          colorBorderBg: "#F0F0F0",
+          colorBgLayout: darkMode ? "#1F1F1F" : "#fff",
+          colorText: darkMode ? "#fff" : "#1F1F1F",
+          colorPrimary: darkMode ? "#1890ff" : "#1890ff",
         },
         algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
@@ -52,10 +69,16 @@ const App: React.FC = () => {
                 <Route path="/liste" element={<ListTaskPage />} />
                 <Route path="/task-ekle" element={<CreateTaskPage />} />
                 <Route path="/task-guncelle" element={<UpdateTaskPage />} />
+                <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Content>
           </Layout>
-          <Footer style={{ textAlign: "center" }}>
+          <Footer
+            style={{
+              textAlign: "center",
+              borderTop: `0.5px solid ${darkMode ? "#313131" : "#F0F0F0"}`,
+            }}
+          >
             Melisa Gokce ©{new Date().getFullYear()} Created by M. GKE
           </Footer>
         </BrowserRouter>

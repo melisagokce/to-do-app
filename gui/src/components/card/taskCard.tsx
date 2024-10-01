@@ -10,6 +10,12 @@ import TaskActions from "../../store/actions/TaskActions";
 import NoImage from "../../assets/task/no-image.png";
 import TaskImage from "../../assets/task/task-image.png";
 import CompletedTask from "../../assets/task/completed-task.png";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
+import CompletedFace from "../completedFace";
+import NotificationManager from "../../managers/NotificationManager";
+import { useTranslation } from "react-i18next";
+
 const { Meta } = Card;
 
 const useStyles = makeStyles({
@@ -38,8 +44,12 @@ const taskCard = ({
   const styles = useStyles();
   const [completed, setCompleted] = React.useState<boolean>(status);
   const [isVisible, setIsVisible] = useState(true);
+  const { t } = useTranslation();
+  const darkMode = useSelector(
+    (state: RootState) => state.appSettingsReducer.darkMode
+  );
 
-  const handleMouseEnter = () => {
+  const handleMouseOver = () => {
     setIsVisible(false);
   };
 
@@ -47,32 +57,64 @@ const taskCard = ({
     setIsVisible(true);
   };
 
-  const onChange: CheckboxProps["onChange"] = (e) => {
-    setCompleted(e.target.checked);
+  const onChange: CheckboxProps["onChange"] = async (e) => {
+    const taskId = e.target.id;
+    const checkStatus = e.target.checked;
+    if (taskId) {
+      const updatedTask: any = {
+        taskId: id,
+        title: title,
+        description: description,
+        checkStatus: checkStatus,
+        imageFile: null,
+      };
+      const response = await TaskManager.updateTask(updatedTask);
+      if (response) {
+        TaskActions.updateTaskStatus(taskId, checkStatus);
+        setCompleted(e.target.checked);
+        NotificationManager.add("success",t("messages.updateCheckStatus.success",{defaultValue:"Task Durumu Başarıyla Güncellendi."}),"");
+      }else{
+        NotificationManager.add("error",t("messages.updateCheckStatus.error",{defaultValue:"Task Durumu Güncelleme Başarısız."}),"");
+      }
+    }
   };
 
   const handleDeleteTask = async (taskId: string) => {
     const resultRemove = await TaskManager.deleteTask(taskId);
     if (resultRemove.status) {
       TaskActions.removeTask(taskId);
+      NotificationManager.add("success",t("messages.removeTask.success",{defaultValue:"Task Başarıyla Silindi."}),"");
+    }else{
+      NotificationManager.add("error",t("messages.removeTask.error",{defaultValue:"Task Silme Başarısız."}),"");
     }
   };
 
   return (
     <Card
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseLeave}
       style={{
-        width: 300,
+        maxWidth: "300px",
         margin: "1rem",
-        filter: "drop-shadow(10px 15px 5px #ccc)",
+        filter: `drop-shadow(10px 15px 5px ${
+          darkMode ? "#151515" : "#999999"
+        })`,
+        borderRadius:"9px"
       }}
       className={className}
       cover={
-        <Carousel autoplay>
+        <Carousel
+          autoplay
+          style={{
+            maxHeight: "300px",
+            minHeight: "300px",
+            maxWidth: "300px",
+            minWidth: "300px",
+          }}
+        >
           {images.map((image: string, index: number) => (
             <div key={index}>
-              <img
+              <Image
                 src={`http://localhost:5220/${image}`}
                 alt={`Slide ${index + 1}`}
                 style={{ width: "300px", height: "300px", objectFit: "cover" }}
@@ -102,28 +144,7 @@ const taskCard = ({
         />,
       ]}
     >
-      {completed && isVisible && (
-        <div
-          style={{
-            position: "absolute",
-            width: "calc(100% + 2px)",
-            height: "calc(100% + 2px)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "12px",
-            zIndex: "9998",
-            background: "rgba(35,35,35,0.6)",
-            backdropFilter: "blur(1.5px)",
-            left: "0px",
-            top: "0px",
-          }}
-        >
-          <Image src={CompletedTask} width={64} preview={false} />
-          <span style={{ color: "#65E965" }}>Tamamlandı!</span>
-        </div>
-      )}
+      {completed && isVisible && <CompletedFace source={CompletedTask} />}
       <Card style={{ position: "relative", width: "100%" }}>
         <Meta
           avatar={
@@ -136,6 +157,7 @@ const taskCard = ({
           title={
             <span
               style={
+                
                 completed
                   ? {
                       textDecoration: "line-through",
@@ -151,8 +173,10 @@ const taskCard = ({
         />
         <Checkbox
           defaultChecked={status}
+          id={id}
           onChange={onChange}
           className={styles.statusCheckbox}
+          style={{ marginTop: "5px", marginRight: "10px" }}
         />
       </Card>
     </Card>

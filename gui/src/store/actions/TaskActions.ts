@@ -27,6 +27,10 @@ class TaskActions {
     store.dispatch({ type: 'TASK_REDUCER/UPDATE_TASK', payload: updatedTask });
   }
 
+  static updateTaskStatus(taskId: string, checkStatus: boolean) {
+    store.dispatch({ type: 'TASK_REDUCER/UPDATE_TASK_STATUS', payload: {taskId, checkStatus} });
+  }
+
 }
 
 export default TaskActions;
