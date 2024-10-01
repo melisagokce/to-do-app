@@ -8,6 +8,7 @@ import AppSettingActions from '../../../../store/actions/AppSettingActions';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import { makeStyles } from '@mui/styles';
+import LocalStorageManager from '../../../../managers/LocalStorageManager';
 
 const customStyles = makeStyles({
     icons:{
@@ -20,10 +21,15 @@ const SwitchLanguage = () => {
     const [language, setLanguage] = useState<ILanguageProps[] | undefined>();
     const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>("TR");
     const darkMode = useSelector((state: RootState)=> state.appSettingsReducer.darkMode);
+    const storeLanguage = useSelector((state: RootState)=> state.appSettingsReducer.language);
     const styles = customStyles();
     useEffect(()=>{
         setSelectedLanguage("TR")
     },[])
+
+    useEffect(()=>{
+        setSelectedLanguage(storeLanguage.toUpperCase());
+    },[storeLanguage])
 
     useEffect(() => {
         setLanguage([
@@ -34,17 +40,23 @@ const SwitchLanguage = () => {
             {
                 text: t("SwitchLanguage.en", { defaultValue: "English"}),
                 value: "EN"
-            }
+            },
+            {
+                text: t("SwitchLanguage.ru", { defaultValue: "Rusça" }),
+                value: "RU"
+            },
         ])
     }, [t]);
 
     const handleChange = (value: string) => {
         setSelectedLanguage(value)
+        LocalStorageManager.setLanguage(value);
         i18n.changeLanguage(value.toLowerCase());
     };
 
     const handleChangeDarkMode = (value: boolean) => {
         AppSettingActions.changeMode(value);
+        LocalStorageManager.setDarkMode(value);
     };
 
 

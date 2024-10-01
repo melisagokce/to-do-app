@@ -50,7 +50,9 @@ namespace api.Controllers
                     Title = task.Title,
                     Description = task.Description,
                     CheckStatus = task.CheckStatus,
-                    Images = files
+                    Images = files,
+                    CreatedAt = task.CreatedAt,
+                    UpdatedAt = task.UpdatedAt
                 };
             });
 
@@ -91,25 +93,35 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("task-sil/{id}")]
-        public IActionResult deleteTask([FromRoute] string id)
+        public IActionResult DeleteTask([FromRoute] string id)
         {
-            var r = taskContext.Tasks.FirstOrDefault(x => x.TaskId == id);
-            if (r == null)
+            var task = taskContext.Tasks.FirstOrDefault(x => x.TaskId == id);
+            if (task == null)
             {
                 return NotFound();
             }
-            taskContext.Remove(r);
+
+            var folderPath = Path.Combine("task", "task-images", task.TaskId.ToString());
+
+            if (Directory.Exists(folderPath))
+            {
+                Directory.Delete(folderPath, true);
+            }
+
+            taskContext.Remove(task);
             taskContext.SaveChanges();
 
             return NoContent();
         }
 
+
         [HttpPut]
         [Route("task-guncelle/{id}")]
-        public IActionResult updateTask(Task task, [FromRoute] string id)
+        public IActionResult UpdateTask([FromBody] Task task, [FromRoute] string id)
         {
-            var existingTask = taskContext.Tasks.FirstOrDefault(x => x.TaskId == id);
 
+            var existingTask = taskContext.Tasks.FirstOrDefault(x => x.TaskId == id);
+            Console.WriteLine(existingTask);
             if (existingTask != null)
             {
                 existingTask.Title = task.Title;
@@ -126,5 +138,26 @@ namespace api.Controllers
 
             return Ok(existingTask);
         }
+
+        // [HttpPut]
+        // [Route("task-status-guncelle/{id}/{checkStatus}")]
+        // public IActionResult updateTask([FromRoute] string id, [FromRoute] bool checkStatus)
+        // {
+        //     Console.WriteLine(id , checkStatus);
+        //     var existingTask = taskContext.Tasks.FirstOrDefault(x => x.TaskId == id);
+
+        //     if (existingTask != null)
+        //     {
+        //         existingTask.CheckStatus = checkStatus;
+        //     }
+        //     else
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     taskContext.SaveChanges();
+
+        //     return Ok(existingTask);
+        // }
     }
 }

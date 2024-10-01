@@ -3,6 +3,7 @@ export default interface ICardProps {
     title: string;
     description: string;
     images: any,
+    imageFile?: any;
     checkStatus: boolean;
     createdAt: string;
     updatedAt: string;

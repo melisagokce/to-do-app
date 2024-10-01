@@ -53,3 +53,26 @@ html, body {
     margin: 0;
     padding: 0;
   }
+
+  /* Tüm scroll bar için */
+::-webkit-scrollbar {
+  width: 12px; /* Genişlik */
+  height: 12px; /* Yükseklik */
+}
+
+/* Scroll bar arka plan */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Arka plan rengi */
+  border-radius: 10px; /* Kenar yuvarlama */
+}
+
+/* Scroll bar */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Thumb rengi */
+  border-radius: 10px; /* Kenar yuvarlama */
+}
+
+/* Scroll bar hover durumu */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Hover rengi */
+}

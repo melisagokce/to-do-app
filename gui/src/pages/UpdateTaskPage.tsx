@@ -1,22 +1,40 @@
-import React, { useEffect } from 'react';
-import { RootState } from '../store/store';
-import { useSelector } from 'react-redux';
-import { Space } from 'antd';
+import React, { useEffect } from "react";
+import {
+  Flex,
+  Layout,
+} from "antd";
+import TaskManager from "../managers/TaskManager";
+import UpdateCardList from "../components/card/updateCardList/updateCardList";
+import UpdateCard from "../components/card/updateCard";
+
+const { Content } = Layout;
 
 const UpdateTaskPage = () => {
-  const tasks = useSelector((state: RootState) => state.taskReducer.tasks);
-  
-  useEffect(()=>{
-    console.log(tasks)
-  },[tasks])
+  useEffect(() => {
+    TaskManager.refresh();
+  }, []);
 
   return (
-    <div>
-       <Space style={{padding:"1rem"}}>
+    <Layout
+      style={{
+        position: "relative",
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+      }}
+    >
+      <Flex style={{ width: "300px" }}>
+        <UpdateCardList />
+      </Flex>
+      <Layout>
+        <Content style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+          <Flex style={{ width: "calc(100% - 300px)" }}>
+            <UpdateCard />
+          </Flex>
+        </Content>
+      </Layout>
+    </Layout>
+  );
+};
 
-      </Space>
-    </div>
-  )
-}
-
-export default UpdateTaskPage
+export default UpdateTaskPage;

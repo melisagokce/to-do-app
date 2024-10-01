@@ -1,3 +1,4 @@
 export default interface IAppSettingsProps {
-    darkMode: boolean
+    darkMode: boolean,
+    language: string
 }
