@@ -21,7 +21,7 @@ namespace api.Models
         [NotMapped]
         public IEnumerable<string>? Images { get; set; }
         [NotMapped]
-        public IFormFile[] imageFile { get; set; }
+        public IFormFile[]? imageFile { get; set; }
 
         public Task(string title, string description, bool checkStatus)
         {

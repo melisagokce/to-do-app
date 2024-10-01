@@ -3,7 +3,8 @@ import IActionProps from "../../models/IActionsProps";
 import IAppSettingsProps from "../../models/IAppSettingsProps";
 
 const initialState: IAppSettingsProps = {
-  darkMode: false
+  darkMode: false,
+  language: "tr"
 };
 
 const taskReducer: Reducer<IAppSettingsProps, IActionProps<IAppSettingsProps | any>> = (
@@ -16,6 +17,13 @@ const taskReducer: Reducer<IAppSettingsProps, IActionProps<IAppSettingsProps | a
         ...state,
         darkMode: action.payload.darkMode,
       };
+
+      case "APPSETTINGS_REDUCER/CHANGE_LANGUAGE":
+      return {
+        ...state,
+        language: action.payload.language,
+      };
+
 
     default:
       return state;

@@ -12,16 +12,77 @@ import {
 } from "antd";
 import RequestManager from "../../managers/RequestManager";
 import TextArea from "antd/es/input/TextArea";
-import NoImage from "../../assets/task/no-image.png";
+import ImageUpload from "../../assets/task/Image-Upload.png";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import NotificationManager from "../../managers/NotificationManager";
+import { useNavigate } from "react-router-dom";
+import TaskManager from "../../managers/TaskManager";
+import { makeStyles } from "@mui/styles";
+import { useTranslation } from "react-i18next";
+import TaskImage from '../../assets/task/task-image.png';
 
 const { Meta } = Card;
 
+const customStyles = makeStyles({
+  root: {
+    display: "flex",
+    padding: "1rem",
+    flexWrap: "wrap",
+  },
+  statusCheckbox: {
+    position: "absolute",
+    right: "1px",
+    top: "1px",
+  },
+  "@keyframes myAnim": {
+    "0%": {
+      opacity: 0,
+      transform: "scale(0)",
+    },
+    "50%": {
+      opacity: 0.8,
+      transform: "scale(1.05)",
+    },
+    "100%": {
+      opacity: 1,
+      transform: "scale(1)",
+    },
+  },
+  "@keyframes cardChanging": {
+    "0%": {
+      opacity: 0,
+    },
+    "100%": {
+      opacity: 1,
+    },
+  },
+  "@keyframes scaleUp": {
+    from: {
+      transform: "scale(1)",
+    },
+    to: {
+      transform: "scale(1.15)",
+      zIndex: "9998",
+    },
+  },
+  card: {
+    animation: "$myAnim 1s ease forwards",
+  },
+});
+
 const taskCard = () => {
+  const darkMode = useSelector(
+    (state: RootState) => state.appSettingsReducer.darkMode
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedImages, setSelectedImages] = useState<any[]>([]);
   const [imagePreview, setImagePreview] = useState<any[]>([]);
   const [desc, setDesc] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const styles = customStyles();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const handleImageChange = (event: any) => {
     const files = Array.from(event.target.files);
@@ -50,8 +111,19 @@ const taskCard = () => {
     event.preventDefault();
   };
 
-  const handleUpload = async () => {
+  const handleAddTask = async () => {
     setLoading(true);
+    if (desc == "" || title == "") {
+      NotificationManager.add(
+        "error",
+        t("messages.addEmpty.error", {
+          defaultValue: "Task başlığı ve/veya açıklama kısmı boş olamaz.",
+        }),
+        ""
+      );
+      setLoading(false);
+      return;
+    }
     const formData = new FormData();
 
     if (selectedImages.length > 0) {
@@ -78,9 +150,23 @@ const taskCard = () => {
     const response = await RequestManager.send(config);
 
     if (response.status) {
-      console.log("task eklendi");
+      NotificationManager.add(
+        "success",
+        t("messages.addTask.success", {
+          defaultValue: "Yeni Task Başarıyla Oluşturuldu.",
+        }),
+        ""
+      );
+      await TaskManager.refresh();
+      navigate("/liste");
     } else {
-      console.log("task eklenemedi");
+      NotificationManager.add(
+        "error",
+        t("messages.addTask.error", {
+          defaultValue: "Yeni Task Oluşturma Başarısız.",
+        }),
+        ""
+      );
     }
     setLoading(false);
   };
@@ -93,7 +179,14 @@ const taskCard = () => {
         style={{ display: "flex", justifyContent: "space-around" }}
       >
         <Card
-          style={{ width: 300, margin: "1rem" }}
+          className={styles.card}
+          style={{
+            width: 300,
+            margin: "1rem",
+            filter: `drop-shadow(10px 15px 5px ${
+              darkMode ? "#151515" : "#999999"
+            })`,
+          }}
           cover={
             <div
               style={{ position: "relative" }}
@@ -119,7 +212,7 @@ const taskCard = () => {
               <Carousel arrows infinite={true}>
                 {imagePreview.length == 0 && (
                   <img
-                    src={NoImage}
+                    src={ImageUpload}
                     style={{
                       width: "300px",
                       height: "300px",
@@ -147,20 +240,28 @@ const taskCard = () => {
             <Button
               type="primary"
               loading={loading}
-              onClick={() => handleUpload()}
+              onClick={() => handleAddTask()}
             >
-              Taskı Kaydet
+              {t("components.addCard.button", {
+                defaultValue: "Taskı Oluştur",
+              })}
             </Button>,
           ]}
         >
           <Card style={{ position: "relative", width: "100%" }}>
             <Meta
               avatar={
-                <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />
+                <Avatar
+                  src={TaskImage}
+                  size={64}
+                  style={{ filter: "drop-shadow(3px 3px 2px black)" }}
+                />
               }
               title={
                 <Input
-                  placeholder="Task başlığı..."
+                  placeholder={t("components.addCard.titlePlaceholder", {
+                    defaultValue: "Task başlığı...",
+                  })}
                   onChange={(e) => {
                     setTitle(e.target.value);
                   }}
@@ -173,7 +274,9 @@ const taskCard = () => {
                   onChange={(e) => {
                     setDesc(e.target.value);
                   }}
-                  placeholder="Açıklama ekleyin..."
+                  placeholder={t("components.addCard.descPlaceholder", {
+                    defaultValue: "Açıklama ekleyin...",
+                  })}
                   style={{ height: 120, resize: "none" }}
                 />
               }

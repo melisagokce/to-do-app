@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import AppSettings from "./items/settings/AppSettings";
 import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux";
@@ -24,6 +24,7 @@ const customStyles = makeStyles({
 const Toolbar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const styles = customStyles();
   const darkMode = useSelector(
     (state: RootState) => state.appSettingsReducer.darkMode
@@ -58,12 +59,13 @@ const Toolbar = () => {
     onClick: () => navigate(item.route),
   }));
 
+  const defaultSelectedKey = menu.findIndex(item => item.route === location.pathname).toString();
+
   return (
     <Header style={{ display: "flex", alignItems: "center", padding: "0" }}>
-      {/* <div className="demo-logo" /> */}
       <Menu
         mode="horizontal"
-        defaultSelectedKeys={["2"]}
+        defaultSelectedKeys={[defaultSelectedKey]}
         items={items1}
         style={{ flex: 1, minWidth: 0 }}
       />

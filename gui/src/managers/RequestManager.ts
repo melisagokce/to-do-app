@@ -12,6 +12,17 @@ class RequestManager{
             return {status: false, data: []};
         }
     }
+
+    static async put(config: IRequestProps){
+        try {
+            const response = await axios.put(config.url);
+            
+            return {status: true, data: response.data};
+        } catch (error: any) {
+            console.log(error);
+            return {status: false, data: []};
+        }
+    }
 }
 
 export default RequestManager;
