@@ -1,12 +1,59 @@
 {
-    "SwitchLanguage":{
-        "tr":"Türkçe",
-        "en":"English"
+    "SwitchLanguage": {
+        "tr": "Türkçe",
+        "en": "English",
+        "ru": "Rusça"
     },
     "toolbar": {
         "addTask": "Task Ekle",
         "removeTask": "Task Sil",
         "updateTask": "Task Güncelle",
-        "listTask":"Taskları Listele"
+        "listTask": "Taskları Listele"
+    },
+    "components":{
+        "updateCard":{
+            "button":"Değişiklikleri Kaydet",
+            "titlePlaceholder":"Task başlığı...",
+            "descPlaceholder":"Açıklama ekleyin..."
+        },
+        "updateCardList":{
+            "header":"Task Listesi"
+        },
+        "addCard":{
+            "button":"Taskı Oluştur",
+            "titlePlaceholder":"Task başlığı...",
+            "descPlaceholder":"Açıklama ekleyin..."
+        },
+        "completedFace":{
+            "text":"Tamamlandı!"
+        },
+        "notFoundPage":{
+            "text":"Üzgünüz, ziyaret ettiğiniz sayfa mevcut değil.",
+            "button":"Geri Dön"
+        }
+    },
+    "messages": {
+        "addTask": {
+            "success": "Yeni Task Başarıyla Oluşturuldu.",
+            "error": "Yeni Task Oluşturma Başarısız."
+        },
+        "updateTask": {
+            "success": "Task Başarıyla Güncellendi.",
+            "error": "Task Güncelleme Başarısız."
+        },
+        "removeTask": {
+            "success": "Task Başarıyla Silindi.",
+            "error": "Task Silme Başarısız."
+        },
+        "updateCheckStatus": {
+            "success": "Task Durumu Başarıyla Güncellendi.",
+            "error": "Task Durumu Güncelleme Başarısız."
+        },
+        "updateEmpty": {
+            "error": "Task başlığı ve/veya açıklama kısmı boş olamaz."
+        },
+        "addEmpty": {
+            "error": "Task başlığı ve/veya açıklama kısmı boş olamaz."
+        }
     }
 }

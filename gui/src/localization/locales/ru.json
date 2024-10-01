@@ -1,0 +1,59 @@
+{
+    "SwitchLanguage": {
+        "tr": "Türkçe",
+        "en": "English",
+        "ru": "Rusça"
+    },
+    "toolbar": {
+        "addTask": "Добавить задачу",
+        "removeTask": "Удалить задачу",
+        "updateTask": "Обновить задачу",
+        "listTask": "Список задач"
+    },
+    "components": {
+        "updateCard": {
+            "button": "Сохранить изменения",
+            "titlePlaceholder": "Название задачи...",
+            "descPlaceholder": "Добавьте описание..."
+        },
+        "updateCardList": {
+            "header": "Список задач"
+        },
+        "addCard": {
+            "button": "Создать задачу",
+            "titlePlaceholder": "Название задачи...",
+            "descPlaceholder": "Добавьте описание..."
+        },
+        "completedFace": {
+            "text": "Завершено!"
+        },
+        "notFoundPage": {
+            "text": "Извините, запрашиваемая вами страница не существует.",
+            "button": "Вернуться"
+        }
+    },
+    "messages": {
+        "addTask": {
+            "success": "Новая задача успешно создана.",
+            "error": "Создание новой задачи не удалось."
+        },
+        "updateTask": {
+            "success": "Задача успешно обновлена.",
+            "error": "Обновление задачи не удалось."
+        },
+        "removeTask": {
+            "success": "Задача успешно удалена.",
+            "error": "Удаление задачи не удалось."
+        },
+        "updateCheckStatus": {
+            "success": "Статус задачи успешно обновлён.",
+            "error": "Обновление статуса задачи не удалось."
+        },
+        "updateEmpty": {
+            "error": "Название задачи и/или описание не могут быть пустыми."
+        },
+        "addEmpty": {
+            "error": "Название задачи и/или описание не могут быть пустыми."
+        }
+    }
+}
